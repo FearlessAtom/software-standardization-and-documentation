@@ -1,2 +1,3 @@
 - [lab1](https://github.com/fearlessatom/software-standardization-and-documentation/tree/lab1)
 - [lab2](https://github.com/fearlessatom/software-standardization-and-documentation/tree/lab2)
+- [lab3](https://github.com/fearlessatom/software-standardization-and-documentation/tree/lab3)
