@@ -1,0 +1,379 @@
+================================================================================
+SYSTEM SPECIFICATION DOCUMENT
+CMS System for Computer Components Online Store
+================================================================================
+
+Document ID  : SSD-CMS-001
+Version      : 1.0
+Status       : Completed
+Date         : April 27, 2026
+Author       : Semenchuk Oleksiy Andriiovych
+
+================================================================================
+
+--------------------------------------------------------------------------------
+1. PURPOSE AND SCOPE
+--------------------------------------------------------------------------------
+
+This System Specification Document (SSD) defines the complete system requirements
+for the CMS-based Online Store for Computer Components.
+
+The system provides a web-based platform enabling customers to browse, search, and
+purchase computer hardware components (CPUs, GPUs, RAM, motherboards, etc.), and
+enabling administrators to manage the product catalog, categories, orders, and
+user reviews.
+
+--------------------------------------------------------------------------------
+2. SYSTEM OVERVIEW
+--------------------------------------------------------------------------------
+
+The system is a PHP-based web application following the Model-View-Controller
+(MVC) architectural pattern. It consists of three primary layers.
+
+The frontend layer uses HTML5, CSS3, and JavaScript (Fetch API) to provide a
+responsive, browser-based user interface.
+
+The backend layer uses PHP 8 to handle all server-side business logic, request
+routing, session management, and access control.
+
+The data layer is a MySQL relational database that stores all persistent data
+including products, users, orders, cart items, and reviews.
+
+The system defines three access levels: anonymous visitor, authenticated user,
+and administrator. All HTTP requests are routed through a central index.php entry
+point and dispatched by the Core class to the appropriate controller and action
+via the HTMLRouter or APIRouter.
+
+Key database entities: product, product_type, product_image, user, role,
+user_role, cart, user_order, review.
+
+--------------------------------------------------------------------------------
+3. FUNCTIONAL REQUIREMENTS
+--------------------------------------------------------------------------------
+
+FR-01 | Type: Functional | Priority: High
+The system shall allow anonymous users to browse all product categories
+(CPU, GPU, RAM, motherboard, etc.) from the home page.
+
+FR-02 | Type: Functional | Priority: High
+The system shall allow users to search and filter products by name,
+category/type, and price range, returning results within 1 second.
+
+FR-03 | Type: Functional | Priority: High
+The system shall allow anonymous users to view detailed product pages including
+name, description, technical specifications, price, discount, stock count,
+images, and average review rating.
+
+FR-04 | Type: Functional | Priority: High
+The system shall allow new users to register with email, name, surname, phone
+number, and password. Passwords must be hashed with BCRYPT before storage.
+
+FR-05 | Type: Functional | Priority: High
+The system shall authenticate registered users via email and password. The
+session shall be maintained server-side.
+
+FR-06 | Type: Functional | Priority: High
+The system shall allow authenticated users to add products to a shopping cart,
+update item quantities, and remove items.
+
+FR-07 | Type: Functional | Priority: High
+The system shall allow authenticated users to place an order from the contents
+of their cart. Placing an order shall invoke the place_order stored procedure.
+
+FR-08 | Type: Functional | Priority: Medium
+The system shall allow authenticated users to view their full order history
+with item details and total cost.
+
+FR-09 | Type: Functional | Priority: Medium
+The system shall allow authenticated users to post text reviews and numeric
+ratings (1 to 5) on product pages.
+
+FR-10 | Type: Functional | Priority: Medium
+The system shall display the average rating per product, computed via the
+get_average_grade stored procedure.
+
+FR-11 | Type: Functional | Priority: Medium
+The system shall allow authenticated users to edit their profile including
+name, surname, phone number, avatar image, and password. Password changes
+require current password confirmation.
+
+FR-12 | Type: Functional | Priority: High
+The system shall provide administrators with a content management panel to
+add, edit, and delete products.
+
+FR-13 | Type: Functional | Priority: High
+The system shall allow administrators to manage product categories including
+adding, editing, and deleting product types.
+
+FR-14 | Type: Functional | Priority: Low
+The system shall allow administrators to moderate and delete user reviews.
+
+FR-15 | Type: Functional | Priority: Medium
+The system shall support multiple product images per product, stored with
+a display order index.
+
+FR-16 | Type: Functional | Priority: High
+All API endpoints shall return HTTP 403 for unauthorized access attempts and
+HTTP 404 for invalid controller or action routes.
+
+--------------------------------------------------------------------------------
+4. NON-FUNCTIONAL REQUIREMENTS
+--------------------------------------------------------------------------------
+
+NFR-01 | Type: Performance | Priority: High
+Page response time for user actions such as clicks and form submissions must
+not exceed 0.25 seconds.
+
+NFR-02 | Type: Performance | Priority: High
+Menu command execution must complete within 1 second.
+
+NFR-03 | Type: Performance | Priority: Medium
+Data query results such as product listings and order history must be returned
+within 3 minutes under normal load.
+
+NFR-04 | Type: Availability | Priority: High
+The database must be accessible 90% of the time on a continuous 24/7 basis.
+
+NFR-05 | Type: Availability | Priority: Medium
+Database connection time must not exceed 1 minute.
+
+NFR-06 | Type: Security | Priority: High
+All user passwords must be stored as BCRYPT hashes. Plain-text passwords must
+never be persisted.
+
+NFR-07 | Type: Security | Priority: High
+All database interactions must use PDO prepared statements with bound
+parameters to prevent SQL injection.
+
+NFR-08 | Type: Security | Priority: High
+Role-based access control must be enforced via the Authorize PHP attribute
+applied to controller methods.
+
+NFR-09 | Type: Security | Priority: Medium
+CORS headers must restrict cross-origin access to the designated local or
+domain origin.
+
+NFR-10 | Type: Usability | Priority: High
+The interface must be fully responsive and accessible from any device via a
+modern web browser over a local network or the Internet.
+
+NFR-11 | Type: Maintainability | Priority: High
+The system must follow the MVC pattern with clear separation of routing,
+business logic, data access, and presentation layers.
+
+NFR-12 | Type: Scalability | Priority: Medium
+The filter_products stored procedure must support pagination to handle large
+product catalogs without performance degradation.
+
+--------------------------------------------------------------------------------
+5. SYSTEM CONSTRAINTS
+--------------------------------------------------------------------------------
+
+5.1 Technical Constraints
+
+The server-side language is PHP 8. No alternative backend frameworks are
+permitted.
+
+The database is MySQL. No NoSQL or alternative relational database systems
+are permitted.
+
+The web server must be Apache with mod_rewrite enabled, as it is required for
+URL routing via .htaccess.
+
+The frontend must use only HTML5, CSS3, and vanilla JavaScript. No frontend
+frameworks such as React or Vue are permitted.
+
+The system must function correctly in the latest two major versions of Chrome,
+Firefox, Safari, and Edge.
+
+5.2 Infrastructure Constraints
+
+The minimum RAM required for the application server is 1 GB.
+
+The maximum disk space for the application and database files is 300 MB on a
+workstation and 20 GB on a server.
+
+The maximum size of the installation package including the database is 100 MB.
+
+--------------------------------------------------------------------------------
+6. SYSTEM ARCHITECTURE
+--------------------------------------------------------------------------------
+
+6.1 Core Classes and Responsibilities
+
+Core
+Singleton entry point. Initialises the session, selects HTMLRouter or
+APIRouter based on the request path, and holds references to the database
+and template instances.
+
+HTMLRouter
+Parses URL route segments to resolve the controller class and action method.
+Validates their existence, checks Authorize attributes, and invokes the
+controller action. Redirects to the home page on authorization failure.
+
+APIRouter
+Operates the same as HTMLRouter but for routes under /api/. Returns HTTP 403
+instead of redirecting on authorization failure, and HTTP 404 for invalid
+routes.
+
+Controller (base class)
+Resolves the view template path from the controller and action names, injects
+the Database instance, and provides a render() helper to pass data to the
+Template.
+
+Database
+A PDO wrapper that provides get_rows(), update_row(), delete_row(),
+filter_products(), place_order(), and get_average_grade() using PDO prepared
+statements with bound parameters.
+
+Template
+Loads a PHP view file, injects parameters as variables, and returns the
+rendered HTML content string.
+
+Authorize (PHP Attribute)
+A PHP 8 attribute applied to controller methods to declare the required roles
+for access. Checked by the router before method invocation.
+
+6.2 Request Routing Flow
+
+1. The browser sends an HTTP request to Apache.
+2. The .htaccess file rewrites all non-file and non-directory requests to
+   index.php with the path passed as the route parameter.
+3. index.php instantiates Core as a singleton.
+4. Core selects HTMLRouter by default, or APIRouter if the path starts with
+   /api/.
+5. The router splits the route into a controller name and an action name.
+6. The router checks the Authorize attribute on the resolved method.
+7. If authorized, the router instantiates the controller and calls the action.
+8. The controller queries the Database and passes data to the Template.
+9. The Template renders HTML and Core sends the response to the browser.
+
+6.3 Database Schema
+
+product
+Columns: id (primary key), name, description, cost, discount, quantity,
+product_type_id (foreign key).
+Purpose: Stores all product listings.
+
+product_type
+Columns: id (primary key), name.
+Purpose: Defines product categories such as CPU, GPU, and RAM.
+
+product_image
+Columns: id (primary key), path, order, product_id (foreign key).
+Purpose: Stores image file paths linked to products with a display order.
+
+user
+Columns: id (primary key), email, name, surname, phone, password, created_at.
+Purpose: Registered user accounts.
+
+role
+Columns: id (primary key), name.
+Purpose: Defines access roles such as user and admin.
+
+user_role
+Columns: user_id (foreign key), role_id (foreign key).
+Purpose: Many-to-many relationship between users and roles.
+
+cart
+Columns: id (primary key), quantity, product_id (foreign key),
+user_id (foreign key).
+Purpose: Shopping cart items per user.
+
+user_order
+Columns: id (primary key), quantity, total_cost, order_date,
+product_id (foreign key), user_id (foreign key).
+Purpose: Completed order history.
+
+review
+Columns: id (primary key), grade, text, date, product_id (foreign key),
+user_id (foreign key).
+Purpose: User reviews and ratings per product.
+
+6.4 Stored Procedures
+
+place_order(cart_id)
+Converts the contents of the specified cart into a completed order record
+in the user_order table.
+
+get_average_grade(product_id)
+Returns the average numeric rating across all reviews for a given product.
+
+filter_products(product_type_ids, min_cost, max_cost, search,
+                products_per_page, page)
+Returns a paginated and filtered list of products along with the total
+count of matching products.
+
+--------------------------------------------------------------------------------
+7. INTERFACE REQUIREMENTS
+--------------------------------------------------------------------------------
+
+7.1 User Interface Pages
+
+Home page
+Displays all product categories with navigation links to their listings.
+
+Product listing page
+Shows all products with a search bar, category filter, price range filter,
+and sort controls by price, rating, or newest.
+
+Product detail page
+Shows the full product name, description, technical specifications, price,
+discount percentage, stock count, image gallery, average rating, and all
+user reviews. Authenticated users can add the product to their cart and
+submit a review.
+
+Cart page
+Lists selected items with quantity adjustment controls, item removal, and
+a Proceed to Checkout button.
+
+Login page
+An email and password form. On success, a server-side session is created.
+
+Registration page
+A form collecting email, name, surname, phone number, and password.
+
+User profile page
+Displays personal information and full order history. Allows editing of
+name, surname, phone number, avatar image, and password.
+
+Admin panel
+Provides product CRUD forms for adding, editing, and deleting products.
+Provides category management forms for product types.
+Provides review moderation with the ability to delete reviews.
+
+7.2 API Interface
+
+All asynchronous operations are handled via internal API routes under /api/.
+The client-side Fetch API communicates with these endpoints, which return
+JSON responses and appropriate HTTP status codes.
+
+Operations handled asynchronously include adding, updating, and removing cart
+items; placing orders; posting reviews; updating user profile information; and
+admin product and category management actions.
+
+--------------------------------------------------------------------------------
+8. ASSUMPTIONS AND DEPENDENCIES
+--------------------------------------------------------------------------------
+
+Apache with mod_rewrite is installed and enabled on the deployment server.
+
+MySQL server is running and accessible to the PHP application.
+
+PHP 8 is installed with the PDO and PDO_MySQL extensions enabled.
+
+The deployment environment supports PHP sessions with server-side storage.
+
+File system write access is available for storing user avatar images.
+
+--------------------------------------------------------------------------------
+9. REVISION HISTORY
+--------------------------------------------------------------------------------
+
+Version 1.0 — April 27, 2026
+Author: Semenchuk Oleksiy Andriiovych
+Changes: Initial SSD.
+
+================================================================================
+END OF DOCUMENT — SSD-CMS-001 v1.0
+================================================================================
