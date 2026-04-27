@@ -1,0 +1,276 @@
+================================================================================
+BUSINESS REQUIREMENTS DOCUMENT
+CMS System for Computer Components Online Store
+================================================================================
+
+Document ID  : BRD-CMS-001
+Version      : 1.0
+Status       : Completed
+Date         : April 27, 2026
+Author       : Semenchuk Oleksiy Andriiovych
+
+================================================================================
+
+--------------------------------------------------------------------------------
+1. EXECUTIVE SUMMARY
+--------------------------------------------------------------------------------
+
+This BRD defines the business needs and requirements for a CMS-based Online
+Store for Computer Components. The system will provide a web storefront for
+customers to browse and purchase hardware, and a management panel for
+administrators to maintain the catalogue, orders, and reviews.
+
+The business currently has no online sales channel. This project addresses
+that gap with a PHP 8 and MySQL web application following the MVC pattern.
+
+--------------------------------------------------------------------------------
+2. PROJECT OBJECTIVES
+--------------------------------------------------------------------------------
+
+PO-01  Deliver a public storefront for browsing, searching, and purchasing
+       computer hardware components.
+PO-02  Deliver an admin CMS panel for catalogue, category, and review management.
+PO-03  Implement a secure user account system with cart, orders, and reviews.
+PO-04  Enforce role-based access control and expose async operations via JSON API.
+PO-05  Ensure a responsive, browser-compatible, and maintainable system.
+
+--------------------------------------------------------------------------------
+3. BUSINESS OBJECTIVES
+--------------------------------------------------------------------------------
+
+BO-01  Provide a 24/7 online storefront to increase sales reach.
+BO-02  Centralise catalogue and order management to reduce admin overhead.
+BO-03  Offer search, filtering, and reviews to improve customer experience.
+BO-04  Protect customer and business data through security controls.
+BO-05  Retain order and review data to support future business analysis.
+BO-06  Follow MVC architecture to keep the system maintainable and scalable.
+
+--------------------------------------------------------------------------------
+4. PROJECT SCOPE
+--------------------------------------------------------------------------------
+
+4.1 In Scope
+
+- Product catalogue with category browsing, search, and price filtering.
+- Product detail pages with specs, images, pricing, discount, and ratings.
+- User registration, login, and profile management with avatar upload.
+- Shopping cart management and order placement with order history.
+- Product reviews with text, rating (1-5), and average rating display.
+- Admin panel for product and category CRUD and review moderation.
+- Role-based access control and JSON API for all async operations.
+- Responsive interface for Chrome, Firefox, Safari, and Edge.
+
+4.2 Out of Scope
+
+- Payment gateway or real-money transaction processing.
+- Email or SMS notifications.
+- Native mobile applications.
+- Multi-language or multi-currency support.
+- External warehouse or ERP integration.
+
+--------------------------------------------------------------------------------
+5. BUSINESS REQUIREMENTS
+--------------------------------------------------------------------------------
+
+BR-01 | Priority: High   | Objective: BO-01, BO-03
+Visitors must be able to browse all product categories without an account.
+
+BR-02 | Priority: High   | Objective: BO-03
+Customers must be able to search and filter products by name, category,
+and price range.
+
+BR-03 | Priority: High   | Objective: BO-03
+Product pages must show specifications, pricing, discount, stock, images,
+and average rating.
+
+BR-04 | Priority: High   | Objective: BO-01
+Customers must be able to self-register with email, name, surname, phone,
+and password.
+
+BR-05 | Priority: High   | Objective: BO-04
+Customers must be able to log in securely with a server-managed session.
+
+BR-06 | Priority: High   | Objective: BO-01
+Authenticated customers must be able to add, update, and remove cart items.
+
+BR-07 | Priority: High   | Objective: BO-01
+Authenticated customers must be able to place orders and view order history.
+
+BR-08 | Priority: Medium | Objective: BO-03, BO-05
+Authenticated customers must be able to submit text reviews and ratings.
+
+BR-09 | Priority: Medium | Objective: BO-03
+Authenticated customers must be able to edit their profile and password.
+
+BR-10 | Priority: High   | Objective: BO-02
+Administrators must be able to add, edit, and delete products and images.
+
+BR-11 | Priority: High   | Objective: BO-02
+Administrators must be able to add, rename, and delete product categories.
+
+BR-12 | Priority: Low    | Objective: BO-02
+Administrators must be able to delete user reviews.
+
+BR-13 | Priority: High   | Objective: BO-04
+Passwords must be BCRYPT-hashed, queries must use prepared statements, and
+access must be enforced by role. Unauthorised requests return HTTP 403.
+
+BR-14 | Priority: Medium | Objective: BO-06
+Product listings must support pagination and multiple ordered images.
+
+--------------------------------------------------------------------------------
+6. FUNCTIONAL REQUIREMENTS
+--------------------------------------------------------------------------------
+
+FR-01 | Priority: High   | Satisfies: BR-01
+The system shall allow anonymous users to browse all product categories.
+
+FR-02 | Priority: High   | Satisfies: BR-02
+The system shall filter products by name, category, and price range,
+returning results within 1 second.
+
+FR-03 | Priority: High   | Satisfies: BR-03
+The system shall display full product detail pages including all fields,
+image gallery, and computed average rating.
+
+FR-04 | Priority: High   | Satisfies: BR-04
+The system shall allow user registration with BCRYPT password hashing.
+
+FR-05 | Priority: High   | Satisfies: BR-05
+The system shall authenticate users via email and password with a
+server-side session.
+
+FR-06 | Priority: High   | Satisfies: BR-06
+The system shall allow authenticated users to add, update, and remove
+shopping cart items.
+
+FR-07 | Priority: High   | Satisfies: BR-07
+The system shall allow order placement via the place_order stored procedure
+and display full order history.
+
+FR-08 | Priority: Medium | Satisfies: BR-08
+The system shall allow authenticated users to submit reviews and ratings
+(1-5) and display the average via get_average_grade.
+
+FR-09 | Priority: Medium | Satisfies: BR-09
+The system shall allow profile editing with current-password confirmation
+for password changes.
+
+FR-10 | Priority: High   | Satisfies: BR-10
+The system shall provide an admin panel for full product CRUD with images.
+
+FR-11 | Priority: High   | Satisfies: BR-11
+The system shall allow administrators to add, rename, and delete categories.
+
+FR-12 | Priority: Low    | Satisfies: BR-12
+The system shall allow administrators to delete user reviews.
+
+FR-13 | Priority: High   | Satisfies: BR-13
+The system shall enforce role-based access via the Authorize PHP attribute,
+returning HTTP 403 for unauthorised access and HTTP 404 for invalid routes.
+
+FR-14 | Priority: Medium | Satisfies: BR-14
+The system shall support paginated product listings via filter_products
+and multiple ordered images per product.
+
+--------------------------------------------------------------------------------
+7. KEY STAKEHOLDERS
+--------------------------------------------------------------------------------
+
+Store Administrator    Manages products, categories, and reviews via the CMS.
+Registered Customer    Browses, purchases, reviews, and manages their account.
+Anonymous Visitor      Browses and views products without logging in.
+Development Team       Builds and delivers the system to specification.
+Project Owner          Approves the system against business requirements.
+
+--------------------------------------------------------------------------------
+9. PROJECT ASSUMPTIONS AND RISKS
+--------------------------------------------------------------------------------
+
+9.1 Assumptions
+
+- Apache with mod_rewrite is installed and enabled on the deployment server.
+- MySQL is running and accessible to the PHP application.
+- PHP 8 is installed with PDO and PDO_MySQL extensions enabled.
+- Server-side PHP session storage is available.
+- File system write access is available for avatar image storage.
+- No real payment processing is required for the initial release.
+
+9.2 Risks
+
+R-01 | Likelihood: Medium | Impact: High
+SQL injection. Mitigated by PDO prepared statements throughout.
+
+R-02 | Likelihood: Medium | Impact: High
+Unauthorised admin access. Mitigated by role-based access control.
+
+R-03 | Likelihood: Low    | Impact: High
+Password breach. Mitigated by BCRYPT hashing; plain text never stored.
+
+R-04 | Likelihood: Medium | Impact: Medium
+Catalogue performance. Mitigated by paginated filter_products procedure.
+
+R-05 | Likelihood: Low    | Impact: High
+Database downtime. Mitigated by 90% uptime target on a stable server.
+
+R-06 | Likelihood: Low    | Impact: Medium
+Unauthorised API access. Mitigated by CORS origin restriction.
+
+--------------------------------------------------------------------------------
+10. ACCEPTANCE CRITERIA
+--------------------------------------------------------------------------------
+
+AC-01  Anonymous users can browse all categories without logging in.
+AC-02  Search and filter returns results within 1 second.
+AC-03  Product pages display all required fields and images in order.
+AC-04  Registration stores the password as a BCRYPT hash.
+AC-05  Correct credentials create a session; wrong credentials are rejected.
+AC-06  Cart changes persist across page navigations within the session.
+AC-07  Placing an order creates a history record and clears the cart.
+AC-08  Ratings outside 1-5 are rejected by the system.
+AC-09  Password changes are blocked without the correct current password.
+AC-10  Admin-added products appear in the catalogue immediately.
+AC-11  Deleted products no longer appear in listings or search results.
+AC-12  Deleting a category with products is blocked by the system.
+AC-13  Deleted reviews are immediately removed from the product page.
+AC-14  Admin endpoints without a valid session return HTTP 403.
+AC-15  Invalid routes return HTTP 404.
+AC-16  Page response time for user interactions does not exceed 0.25 seconds.
+
+--------------------------------------------------------------------------------
+11. COST-BENEFIT ANALYSIS
+--------------------------------------------------------------------------------
+
+11.1 Costs
+
+- Development effort to design, build, test, and deploy the system.
+- Server infrastructure meeting minimum requirements (1 GB RAM, Apache,
+  MySQL, PHP 8).
+- Ongoing maintenance for security patches and catalogue updates.
+
+11.2 Benefits
+
+- 24/7 sales channel removing physical store hour constraints.
+- Reduced admin effort through a centralised CMS replacing manual tools.
+- Improved customer trust and retention through a secure storefront with
+  peer reviews and accurate product information.
+- Scalable MVC codebase reducing the cost of future changes.
+
+11.3 Assessment
+
+The development and infrastructure investment is justified by the competitive
+necessity of an online channel and the long-term reduction in admin overhead.
+The MVC architecture protects the investment by enabling future extensions
+without architectural rework.
+
+--------------------------------------------------------------------------------
+13. REVISION HISTORY
+--------------------------------------------------------------------------------
+
+Version 1.0 — April 27, 2026
+Author  : Semenchuk Oleksiy Andriiovych
+Changes : Initial BRD.
+
+================================================================================
+END OF DOCUMENT — BRD-CMS-001 v1.0
+================================================================================
