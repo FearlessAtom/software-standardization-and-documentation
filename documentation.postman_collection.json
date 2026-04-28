@@ -1,0 +1,630 @@
+{
+  "info": {
+    "_postman_id": "76aba759-84ed-407a-94b0-957f25a57338",
+    "name": "Software Standardization and Documentation",
+    "description": "This collection covers user authentication and management endpoints. It includes examples for registration, login, retrieving users, and logout, along with error cases such as invalid credentials and duplicate email or phone number.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "36775374"
+  },
+  "item": [
+    {
+      "name": "Sign Up",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email_address\": \"idk3@gmail.com\",\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"phone_number\": \"067676769\",\n    \"password\": \"somepassword\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://coursework.local/api/users/sign_up",
+          "protocol": "http",
+          "host": [
+            "coursework",
+            "local"
+          ],
+          "path": [
+            "api",
+            "users",
+            "sign_up"
+          ]
+        },
+        "description": "Registers a new user account with email, name, phone number, and password. Returns a JWT authentication cookie on success."
+      },
+      "response": [
+        {
+          "name": "Sign Up",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email_address\": \"idk3@gmail.com\",\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"phone_number\": \"067676769\",\n    \"password\": \"somepassword\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://coursework.local/api/users/sign_up",
+              "protocol": "http",
+              "host": [
+                "coursework",
+                "local"
+              ],
+              "path": [
+                "api",
+                "users",
+                "sign_up"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 28 Apr 2026 09:50:12 GMT"
+            },
+            {
+              "key": "Server",
+              "value": "Apache/2.4.66 (Unix) PHP/8.5.5"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.5.5"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://coursework.local"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Set-Cookie",
+              "value": "jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1NCwiZXhwIjoxNzc3NDU2MjEyfQ.xO13JmAKUYI4e9bUB6a7M-zGcBiDhEEU7UoxrnR4_tU; expires=Wed, 29 Apr 2026 09:50:12 GMT; Max-Age=86400; path=/; HttpOnly; SameSite=Lax"
+            },
+            {
+              "key": "Content-Length",
+              "value": "0"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5, max=100"
+            },
+            {
+              "key": "Connection",
+              "value": "Keep-Alive"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/html; charset=UTF-8"
+            }
+          ],
+          "cookie": [],
+          "body": null
+        }
+      ]
+    },
+    {
+      "name": "Sign Up Email and Phone Number Taken",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email_address\": \"idk2@gmail.com\",\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"phone_number\": \"067676768\",\n    \"password\": \"somepassword\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://coursework.local/api/users/sign_up",
+          "protocol": "http",
+          "host": [
+            "coursework",
+            "local"
+          ],
+          "path": [
+            "api",
+            "users",
+            "sign_up"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Sign Up Email and Phone Number Taken",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email_address\": \"idk2@gmail.com\",\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"phone_number\": \"067676768\",\n    \"password\": \"somepassword\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://coursework.local/api/users/sign_up",
+              "protocol": "http",
+              "host": [
+                "coursework",
+                "local"
+              ],
+              "path": [
+                "api",
+                "users",
+                "sign_up"
+              ]
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 28 Apr 2026 09:50:15 GMT"
+            },
+            {
+              "key": "Server",
+              "value": "Apache/2.4.66 (Unix) PHP/8.5.5"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.5.5"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://coursework.local"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Content-Length",
+              "value": "23"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/html; charset=UTF-8"
+            }
+          ],
+          "cookie": [],
+          "body": "Email address is taken!"
+        }
+      ]
+    },
+    {
+      "name": "Log In",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email_address\": \"atomgotaggressive@gmail.com\",\n    \"password\": \"20062006\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://coursework.local/api/users/login",
+          "protocol": "http",
+          "host": [
+            "coursework",
+            "local"
+          ],
+          "path": [
+            "api",
+            "users",
+            "login"
+          ]
+        },
+        "description": "Logs out the current user by expiring the JWT cookie."
+      },
+      "response": [
+        {
+          "name": "Log In",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email_address\": \"atomgotaggressive@gmail.com\",\n    \"password\": \"20062006\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://coursework.local/api/users/login",
+              "protocol": "http",
+              "host": [
+                "coursework",
+                "local"
+              ],
+              "path": [
+                "api",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 28 Apr 2026 09:49:37 GMT"
+            },
+            {
+              "key": "Server",
+              "value": "Apache/2.4.66 (Unix) PHP/8.5.5"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.5.5"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://coursework.local"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Set-Cookie",
+              "value": "jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJleHAiOjE3Nzc0NTYxNzh9.4wS1vstvDqH6Tpd0WYwVxQH5PtvUSomEI3ErmnkqaGk; expires=Wed, 29 Apr 2026 09:49:38 GMT; Max-Age=86400; path=/; HttpOnly; SameSite=Lax"
+            },
+            {
+              "key": "Content-Length",
+              "value": "0"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5, max=100"
+            },
+            {
+              "key": "Connection",
+              "value": "Keep-Alive"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/html; charset=UTF-8"
+            }
+          ],
+          "cookie": [],
+          "body": null
+        }
+      ]
+    },
+    {
+      "name": "Log In Wrong Credentials",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email_address\": \"atomgotaggressive@gmail.com\",\n    \"password\": \"wrong_password\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://coursework.local/api/users/login",
+          "protocol": "http",
+          "host": [
+            "coursework",
+            "local"
+          ],
+          "path": [
+            "api",
+            "users",
+            "login"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Log In Wrong Credentials",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email_address\": \"atomgotaggressive@gmail.com\",\n    \"password\": \"wrong_password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://coursework.local/api/users/login",
+              "protocol": "http",
+              "host": [
+                "coursework",
+                "local"
+              ],
+              "path": [
+                "api",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 28 Apr 2026 09:45:54 GMT"
+            },
+            {
+              "key": "Server",
+              "value": "Apache/2.4.66 (Unix) PHP/8.5.5"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.5.5"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://coursework.local"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Content-Length",
+              "value": "20"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/html; charset=UTF-8"
+            }
+          ],
+          "cookie": [],
+          "body": "Invalid credentials!"
+        }
+      ]
+    },
+    {
+      "name": "Get Users",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://coursework.local/api/users",
+          "protocol": "http",
+          "host": [
+            "coursework",
+            "local"
+          ],
+          "path": [
+            "api",
+            "users"
+          ]
+        },
+        "description": "Returns a list of all registered users."
+      },
+      "response": [
+        {
+          "name": "Get Users",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://coursework.local/api/users",
+              "protocol": "http",
+              "host": [
+                "coursework",
+                "local"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "_postman_previewlanguage": null,
+          "header": null,
+          "cookie": [],
+          "body": null
+        }
+      ]
+    },
+    {
+      "name": "Log Out",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://coursework.local/api/users/logout",
+          "protocol": "http",
+          "host": [
+            "coursework",
+            "local"
+          ],
+          "path": [
+            "api",
+            "users",
+            "logout"
+          ]
+        },
+        "description": "Logs out the current user by clearing the JWT authentication cookie."
+      },
+      "response": [
+        {
+          "name": "Log Out",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://coursework.local/api/users/logout",
+              "protocol": "http",
+              "host": [
+                "coursework",
+                "local"
+              ],
+              "path": [
+                "api",
+                "users",
+                "logout"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 28 Apr 2026 09:49:07 GMT"
+            },
+            {
+              "key": "Server",
+              "value": "Apache/2.4.66 (Unix) PHP/8.5.5"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.5.5"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://coursework.local"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Set-Cookie",
+              "value": "jwt=deleted; expires=Thu, 01 Jan 1970 00:00:01 GMT; Max-Age=0; path=/"
+            },
+            {
+              "key": "Content-Length",
+              "value": "0"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5, max=100"
+            },
+            {
+              "key": "Connection",
+              "value": "Keep-Alive"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/html; charset=UTF-8"
+            }
+          ],
+          "cookie": [],
+          "body": null
+        }
+      ]
+    }
+  ]
+}
