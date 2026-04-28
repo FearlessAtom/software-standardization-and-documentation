@@ -1,2 +1,3 @@
-- [lab1](https://github.com/fearlessatom/software-standardization-and-documentation/tree/lab1)
-- [lab2](https://github.com/fearlessatom/software-standardization-and-documentation/tree/lab2)
+- [STUDENT_DOCS](./STUDENT_DOCS.pdf)
+
+- ### [main branch](https://github.com/FearlessAtom/software-standardization-and-documentation)
